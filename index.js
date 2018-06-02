@@ -23,7 +23,8 @@ io.on('connection', (client) => {
     });
 
     client.on('list', (data) => {
-        client.emit({clients: store.clients});
+        console.log(store.clients);
+        client.emit({ clients: store.clients });
     });
 
     client.on('left', (data) => {
