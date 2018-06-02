@@ -193,6 +193,7 @@ io.on('connection', (client) => {
     });
 });
 
+initGame();
 setInterval(gameLoop, 200);
 
 io.listen(conf.port);
