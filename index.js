@@ -2,6 +2,22 @@ var io = require('socket.io')();
 var store = require('./store');
 var crypto = require('crypto');
 
+var net = require('net');
+
+var c = [];
+
+var server = net.createServer(function(socket) {
+	socket.write('Echo server\r\n');
+    socket.pipe(socket);
+    c.push(socket);
+
+    socket.on('data', function(data) {
+        console.log(data.toString('hex'));
+    })
+});
+
+server.listen(1337, '127.0.0.1');
+
 var conf = {
     port: 9875,
 };
@@ -24,13 +40,13 @@ io.on('connection', (client) => {
 
 
     client.on('join', (data) => {
-        
+
     })
 
     // deplacement
 
     client.on('up', (data) => {
-        //console.log('')
+        client.emit('up', 'datax');
     });
 
     client.on('left', (data) => {
