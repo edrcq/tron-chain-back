@@ -35,7 +35,7 @@ io.on('connection', (client) => {
     
     var authToken =  crypto.randomBytes(16).toString('hex');
     store.clientsByTokens[authToken] = client.id;
-    client.emit("up", authToken);
+    client.emit("auth", authToken);
 
     // middleware
     client.use((data, next) => {
