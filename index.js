@@ -53,7 +53,7 @@ io.on('connection', (client) => {
     // deplacement
 
     client.on('up', (data) => {
-        client.emit('up', { x: '0', y: '1' });
+        client.emit('up', JSON.stringify({ x: '0', y: '1' }));
     });
 
     client.on('left', (data) => {
