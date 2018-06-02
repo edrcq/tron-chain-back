@@ -66,9 +66,13 @@ function moveP(pos, player) {
 }
 
 function gameLoop() {
+    console.log('gameLoop');
+    if (store.inloop === true) { return ; }
     store.inloop = true;
     var game = store.game;
     var players = game.players;
+    console.log(game);
+    console.log(players);
 
     if (players.length < 4) { store.inloop = false; return ; }
     if (game.started === false) {
@@ -89,6 +93,8 @@ function gameLoop() {
         p3: { x: players[2].pos.x, y: players[2].pos.y, direction: players[2].direction },
         p4: { x: players[3].pos.x, y: players[3].pos.y, direction: players[3].direction },
     };
+
+    console.log(players);
 
     sendToPlayers('updateGame', dataToSend);
     store.inloop = false;
@@ -187,6 +193,7 @@ io.on('connection', (client) => {
     });
 });
 
+setInterval(gameLoop, 200);
 
 io.listen(conf.port);
 console.log('Listening WebSocket on', conf.port);
