@@ -23,6 +23,8 @@ var conf = {
     port: 9875,
 };
 
+const MAX_PLAYERS = 2;
+
 function initGame() {
     store.game = Object.assign({}, Game);
 }
@@ -34,8 +36,8 @@ function startGame() {
     var dataToSend = {
         p1: { x: players[0].pos.x, y: players[0].pos.y, direction: players[0].direction },
         p2: { x: players[1].pos.x, y: players[1].pos.y, direction: players[1].direction },
-        p3: { x: players[2].pos.x, y: players[2].pos.y, direction: players[2].direction },
-        p4: { x: players[3].pos.x, y: players[3].pos.y, direction: players[3].direction },
+        /*p3: { x: players[2].pos.x, y: players[2].pos.y, direction: players[2].direction },
+        p4: { x: players[3].pos.x, y: players[3].pos.y, direction: players[3].direction }, */
     };
     sendToPlayers('startGame', dataToSend);
 }
@@ -48,6 +50,8 @@ function sendToPlayers(event, data) {
 
 function moveP(pos, player) {
     let direction = player.direction;
+
+    if (player.dead === true) { return ; }
 
     if (direction == 'top') {
         player.pos.y++;
@@ -74,7 +78,7 @@ function gameLoop() {
     console.log(game);
     console.log(players);
 
-    if (players.length < 4) { store.inloop = false; return ; }
+    if (players.length < MAX_PLAYERS) { store.inloop = false; return ; }
     if (game.started === false) {
         store.game.started = true;
         startGame();
@@ -82,16 +86,16 @@ function gameLoop() {
 
     moveP(0, players[0]);
     moveP(1, players[1]);
-    moveP(2, players[2]);
-    moveP(3, players[3]);
+    /*moveP(2, players[2]);
+    moveP(3, players[3]);*/
 
     players = store.game.players;
 
     var dataToSend = {
         p1: { x: players[0].pos.x, y: players[0].pos.y, direction: players[0].direction },
         p2: { x: players[1].pos.x, y: players[1].pos.y, direction: players[1].direction },
-        p3: { x: players[2].pos.x, y: players[2].pos.y, direction: players[2].direction },
-        p4: { x: players[3].pos.x, y: players[3].pos.y, direction: players[3].direction },
+    /*    p3: { x: players[2].pos.x, y: players[2].pos.y, direction: players[2].direction },
+        p4: { x: players[3].pos.x, y: players[3].pos.y, direction: players[3].direction }, */
     };
 
     console.log(players);
@@ -147,7 +151,7 @@ io.on('connection', (client) => {
         store.game.playersId[client.id] = store.game.players.length;
         store.game.players.push(client.playerData);
         
-        socket.emit('joinGame', { x: client.playerData.pos.x, y: client.playerData.pos.y, direction: client.playerData.direction });
+        client.emit('joinGame', { x: client.playerData.pos.x, y: client.playerData.pos.y, direction: client.playerData.direction });
     })
 
     client.on('startGame', (data) => {
@@ -155,35 +159,55 @@ io.on('connection', (client) => {
         
     })
 
+    client.on('dead', (data) => {
+        var pn = store.game.playersId[client.id];
+        var playerData = store.game.players[pn];
+        playerData.dead = true;
+        store.game.players[pn] = playerData;
+        client.playerData = playerData;
+    })
+
     // deplacement
 
     client.on('up', (data) => {
         var pn = store.game.playersId[client.id];
         var playerData = store.game.players[pn];
+        if (!pn || !playerData) { return ; }
+        if (playerData.dead === true) { return ;}
         playerData.direction = 'up';
         store.game.players[pn] = playerData;
+        client.playerData = playerData;
         client.emit('up', JSON.stringify({ x: '0', y: '1' }));
     });
 
     client.on('left', (data) => {
         var pn = store.game.playersId[client.id];
         var playerData = store.game.players[pn];
+        if (!pn || !playerData) { return ; }
+        if (playerData.dead === true) { return ;}
         playerData.direction = 'left';
         store.game.players[pn] = playerData;
+        client.playerData = playerData;
     });
 
     client.on('right', (data) => {
         var pn = store.game.playersId[client.id];
         var playerData = store.game.players[pn];
+        if (!pn || !playerData) { return ; }
+        if (playerData.dead === true) { return ;}
         playerData.direction = 'right';
         store.game.players[pn] = playerData;
+        client.playerData = playerData;
     });
 
     client.on('down', (data) => {
         var pn = store.game.playersId[client.id];
         var playerData = store.game.players[pn];
+        if (!pn || !playerData) { return ; }
+        if (playerData.dead === true) { return ;}
         playerData.direction = 'down';
         store.game.players[pn] = playerData;
+        client.playerData = playerData;
     });
 
 
