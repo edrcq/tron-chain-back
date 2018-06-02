@@ -4,23 +4,28 @@ var crypto = require('crypto');
 
 var net = require('net');
 
-var c = [];
+var Player = {
+    socket: null,
+    position: [0,0],
+}
 
-var server = net.createServer(function(socket) {
-	socket.write('Echo server\r\n');
-    socket.pipe(socket);
-    c.push(socket);
-
-    socket.on('data', function(data) {
-        console.log(data.toString('hex'));
-    })
-});
-
-server.listen(1337, '127.0.0.1');
+var Game = {
+    value: 0.01,
+    players: {}, // id : { }
+    map: [],
+}
 
 var conf = {
     port: 9875,
 };
+
+function initGame() {
+    store.game = Object.assign({}, Game);
+}
+
+function sendToPlayers(data) {
+    
+}
 
 io.on('connection', (client) => {
     console.log('Connected', client.id, 'from', client.request.connection.remoteAddress);
@@ -46,7 +51,7 @@ io.on('connection', (client) => {
     // deplacement
 
     client.on('up', (data) => {
-        client.emit('up', 'datax');
+        client.emit('up', { x: 0, y: 1, moreData: { foo: 'bar' } });
     });
 
     client.on('left', (data) => {
