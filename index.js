@@ -1,5 +1,6 @@
 var io = require('socket.io')();
 var store = require('./store');
+var crypto = require('crypto');
 
 var conf = {
     port: 9875,
@@ -8,8 +9,10 @@ var conf = {
 io.on('connection', (client) => {
     console.log('Connected', client.id, 'from', client.request.connection.remoteAddress);
     store.clients[client.id] = client;
-
-    client.emit("up", "test");
+    
+    var authToken =  crypto.randomBytes(16).toString('hex');
+    store.clientsByTokens[authToken] = client.id;
+    client.emit("up", authToken);
 
     // middleware
     client.use((data, next) => {
@@ -18,13 +21,14 @@ io.on('connection', (client) => {
         next();
     });
 
+
+
+    client.on('')
+
+    // deplacement
+
     client.on('up', (data) => {
-
-    });
-
-    client.on('list', (data) => {
-        console.log(store.clients);
-        client.emit({ clients: store.clients });
+        //console.log('')
     });
 
     client.on('left', (data) => {
