@@ -148,9 +148,11 @@ io.on('connection', (client) => {
             return ;
         }
 
-        store.game.playersId[client.id] = store.game.players.length;
+        let count = store.game.players.length;
+        store.game.playersId[client.id] = count;
         store.game.players.push(client.playerData);
         
+        client.emit('idPlayer', count);
         client.emit('joinGame', { x: client.playerData.pos.x, y: client.playerData.pos.y, direction: client.playerData.direction });
     })
 
