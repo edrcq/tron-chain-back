@@ -1,5 +1,3 @@
-import { setTimeout, setImmediate } from 'timers';
-
 var io = require('socket.io')();
 var store = require('./store');
 var crypto = require('crypto');
