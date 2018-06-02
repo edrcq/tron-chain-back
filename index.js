@@ -136,14 +136,14 @@ io.on('connection', (client) => {
             client.playerData.pos = { x: 25, y: 25 };
             client.playerData.direction = 'down';
         }
-        else if (store.game.players.length == 2) {
+        /*else if (store.game.players.length == 2) {
             client.playerData.pos = { x: -25, y: -25 };
             client.playerData.direction = 'top';
         }
         else if (store.game.players.length == 3) {
             client.playerData.pos = { x: 25, y: -25 };
             client.playerData.direction = 'left';
-        }
+        }*/
         else {
             return ;
         }
@@ -162,6 +162,7 @@ io.on('connection', (client) => {
     client.on('dead', (data) => {
         var pn = store.game.playersId[client.id];
         var playerData = store.game.players[pn];
+        if (!pn || !playerData) { return ; }
         playerData.dead = true;
         store.game.players[pn] = playerData;
         client.playerData = playerData;
@@ -218,7 +219,7 @@ io.on('connection', (client) => {
 });
 
 initGame();
-setInterval(gameLoop, 200);
+setInterval(gameLoop, 1000);
 
 io.listen(conf.port);
 console.log('Listening WebSocket on', conf.port);
