@@ -9,7 +9,7 @@ io.on('connection', (client) => {
     console.log('Connected', client.id, 'from', client.request.connection.remoteAddress);
     store.clients[client.id] = client;
 
-    client.emit("connect", "Hello");
+    client.emit("up", "test");
 
     // middleware
     client.use((data, next) => {
