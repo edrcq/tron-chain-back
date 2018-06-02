@@ -6,7 +6,7 @@ var net = require('net');
 
 var Player = {
     socket: null,
-    position: [0,0],
+    position: { x: 0, y: 0 },
 }
 
 var Game = {
@@ -24,7 +24,9 @@ function initGame() {
 }
 
 function sendToPlayers(data) {
-    
+    store.game.players.forEach( (val, i) => {
+        val.socket.emit()
+    })
 }
 
 io.on('connection', (client) => {
@@ -51,7 +53,7 @@ io.on('connection', (client) => {
     // deplacement
 
     client.on('up', (data) => {
-        client.emit('up', { x: 0, y: 1, moreData: { foo: 'bar' } });
+        client.emit('up', { x: 0, y: 1 });
     });
 
     client.on('left', (data) => {
