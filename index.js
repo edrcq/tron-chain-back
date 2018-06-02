@@ -23,7 +23,9 @@ io.on('connection', (client) => {
 
 
 
-    client.on('')
+    client.on('join', (data) => {
+        
+    })
 
     // deplacement
 
