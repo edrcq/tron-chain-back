@@ -46,7 +46,7 @@ io.on('connection', (client) => {
 
 
 
-    client.on('join', (data) => {
+    client.on('joinGame', (data) => {
 
     })
 
