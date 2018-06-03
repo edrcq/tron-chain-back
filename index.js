@@ -39,6 +39,7 @@ function startGame() {
         /*p3: { x: players[2].pos.x, y: players[2].pos.y, direction: players[2].direction },
         p4: { x: players[3].pos.x, y: players[3].pos.y, direction: players[3].direction }, */
     };
+    console.log('send start game');
     sendToPlayers('startGame', dataToSend);
 }
 
@@ -75,8 +76,7 @@ function gameLoop() {
     store.inloop = true;
     var game = store.game;
     var players = game.players;
-    console.log(game);
-    console.log(players);
+    console.log('started', game.started);
 
     if (players.length < MAX_PLAYERS) { store.inloop = false; return ; }
     if (game.started === false) {
