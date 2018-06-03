@@ -154,7 +154,7 @@ io.on('connection', (client) => {
         store.game.playersId[client.id] = count;
         store.game.players.push(client.playerData);
         
-        client.emit('joinGame', { x: client.playerData.pos.x, y: client.playerData.pos.y, direction: client.playerData.direction, idPlayer: count });
+        client.emit('joinGame', { x: client.playerData.pos.x, y: client.playerData.pos.y, direction: client.playerData.direction, idPlayer: (count + 1) });
     })
 
     client.on('startGame', (data) => {
