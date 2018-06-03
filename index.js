@@ -24,7 +24,7 @@ var conf = {
 };
 
 const MAX_PLAYERS = 2;
-const LOOP_TIME = 150;
+const LOOP_TIME = 100;
 
 function initGame() {
     store.game = Object.assign({}, Game);
@@ -83,6 +83,10 @@ function gameLoop() {
     var players = game.players;
     console.log('started', game.started);
 
+    if (players[0].dead == true || players[1].dead == true) {
+        store.inloop = true;
+        return ;
+    }
     if (players.length < MAX_PLAYERS) { store.inloop = false; return ; }
     if (store.game.started === false) {
         store.game.started = true;
