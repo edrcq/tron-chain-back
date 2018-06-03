@@ -176,7 +176,7 @@ io.on('connection', (client) => {
     client.on('up', (data) => {
         var pn = store.game.playersId[client.id];
         var playerData = store.game.players[pn];
-        if (!pn || !playerData) { return ; }
+        if (!(pn == 0 || pn == 1) || !playerData) { return ; }
         if (playerData.dead === true) { return ;}
         playerData.direction = 'up';
         store.game.players[pn] = playerData;
@@ -187,7 +187,7 @@ io.on('connection', (client) => {
     client.on('left', (data) => {
         var pn = store.game.playersId[client.id];
         var playerData = store.game.players[pn];
-        if (!pn || !playerData) { return ; }
+        if (!(pn == 0 || pn == 1) || !playerData) { return ; }
         if (playerData.dead === true) { return ;}
         playerData.direction = 'left';
         store.game.players[pn] = playerData;
@@ -198,7 +198,7 @@ io.on('connection', (client) => {
     client.on('right', (data) => {
         var pn = store.game.playersId[client.id];
         var playerData = store.game.players[pn];
-        if (!pn || !playerData) { return ; }
+        if (!(pn == 0 || pn == 1) || !playerData) { return ; }
         if (playerData.dead === true) { return ;}
         playerData.direction = 'right';
         store.game.players[pn] = playerData;
@@ -209,7 +209,7 @@ io.on('connection', (client) => {
     client.on('down', (data) => {
         var pn = store.game.playersId[client.id];
         var playerData = store.game.players[pn];
-        if (!pn || !playerData) { return ; }
+        if (!(pn == 0 || pn == 1) || !playerData) { return ; }
         if (playerData.dead === true) { return ;}
         playerData.direction = 'down';
         store.game.players[pn] = playerData;
@@ -225,7 +225,7 @@ io.on('connection', (client) => {
 });
 
 initGame();
-setInterval(gameLoop, 200);
+setInterval(gameLoop, 250);
 
 io.listen(conf.port);
 console.log('Listening WebSocket on', conf.port);
