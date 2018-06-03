@@ -58,7 +58,7 @@ function moveP(pos, player) {
 
     if (player.dead === true) { return ; }
 
-    if (direction == 'top') {
+    if (direction == 'up') {
         player.pos.y++;
     }
     else if (direction == 'down') {
