@@ -40,10 +40,11 @@ function startGame() {
         p4: { x: players[3].pos.x, y: players[3].pos.y, direction: players[3].direction }, */
     };
     console.log('send start game');
-    sendToPlayers('startGame', dataToSend);
+    sendToPlayers('starteGame', dataToSend);
 }
 
 function sendToPlayers(event, data) {
+    console.log(event, data);
     store.game.players[0].socket.emit(event, data);
     store.game.players[1].socket.emit(event, data);
     /*store.game.players.forEach( (p, i) => {
