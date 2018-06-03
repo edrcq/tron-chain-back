@@ -44,8 +44,8 @@ function startGame() {
 }
 
 function sendToPlayers(event, data) {
-    store.game.players[0].emit(event, data);
-    store.game.players[1].emit(event, data);
+    store.game.players[0].socket.emit(event, data);
+    store.game.players[1].socket.emit(event, data);
     /*store.game.players.forEach( (p, i) => {
         console.log('ID START', p.socket.id, event);
         p.socket.emit(event, data);
