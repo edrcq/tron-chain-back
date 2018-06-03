@@ -40,7 +40,7 @@ function startGame() {
         p4: { x: players[3].pos.x, y: players[3].pos.y, direction: players[3].direction }, */
     };
     console.log('send start game');
-    sendToPlayers('starteGame', dataToSend);
+    sendToPlayers('startGame', dataToSend);
 }
 
 function sendToPlayers(event, data) {
@@ -154,7 +154,7 @@ io.on('connection', (client) => {
         store.game.playersId[client.id] = count;
         store.game.players.push(client.playerData);
         
-        client.emit('idPlayer', count);
+        //client.emit('idPlayer', count);
         client.emit('joinGame', { x: client.playerData.pos.x, y: client.playerData.pos.y, direction: client.playerData.direction });
     })
 
