@@ -181,7 +181,7 @@ io.on('connection', (client) => {
         playerData.direction = 'up';
         store.game.players[pn] = playerData;
         client.playerData = playerData;
-        client.emit('up', JSON.stringify({ x: '0', y: '1' }));
+        console.log(pn, 'up');
     });
 
     client.on('left', (data) => {
@@ -192,6 +192,7 @@ io.on('connection', (client) => {
         playerData.direction = 'left';
         store.game.players[pn] = playerData;
         client.playerData = playerData;
+        console.log(pn, 'left');
     });
 
     client.on('right', (data) => {
@@ -202,6 +203,7 @@ io.on('connection', (client) => {
         playerData.direction = 'right';
         store.game.players[pn] = playerData;
         client.playerData = playerData;
+        console.log(pn, 'right');
     });
 
     client.on('down', (data) => {
@@ -212,6 +214,7 @@ io.on('connection', (client) => {
         playerData.direction = 'down';
         store.game.players[pn] = playerData;
         client.playerData = playerData;
+        console.log(pn, 'down');
     });
 
 
@@ -222,7 +225,7 @@ io.on('connection', (client) => {
 });
 
 initGame();
-setInterval(gameLoop, 1000);
+setInterval(gameLoop, 200);
 
 io.listen(conf.port);
 console.log('Listening WebSocket on', conf.port);
