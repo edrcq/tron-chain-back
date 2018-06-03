@@ -131,11 +131,11 @@ io.on('connection', (client) => {
         client.playerData.socket = client;
     
         if (store.game.players.length == 0) {
-            client.playerData.pos = { x: -25, y: 25 };
+            client.playerData.pos = { x: -15, y: 15 };
             client.playerData.direction = 'right';
         }
         else if (store.game.players.length == 1) {
-            client.playerData.pos = { x: 25, y: 25 };
+            client.playerData.pos = { x: 15, y: -15 };
             client.playerData.direction = 'down';
         }
         /*else if (store.game.players.length == 2) {
