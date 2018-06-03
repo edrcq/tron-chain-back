@@ -83,7 +83,7 @@ function gameLoop() {
     var players = game.players;
     console.log('started', game.started);
 
-    if (players[0].dead == true || players[1].dead == true) {
+    if ((players[0] && players[1]) && players[0].dead == true || players[1].dead == true) {
         store.inloop = true;
         return ;
     }
