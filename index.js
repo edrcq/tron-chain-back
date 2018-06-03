@@ -45,7 +45,7 @@ function startGame() {
 
 function sendToPlayers(event, data) {
     store.game.players.forEach( (p, i) => {
-        console.log('ID START', p.socket.id);
+        console.log('ID START', p.socket.id, event);
         p.socket.emit(event, data);
     })
 }
@@ -80,7 +80,7 @@ function gameLoop() {
     console.log('started', game.started);
 
     if (players.length < MAX_PLAYERS) { store.inloop = false; return ; }
-    if (game.started === false) {
+    if (store.game.started === false) {
         store.game.started = true;
         startGame();
     }
