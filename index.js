@@ -83,11 +83,12 @@ function gameLoop() {
     var players = game.players;
     console.log('started', game.started);
 
-    if ((players[0] && players[1]) && players[0].dead == true || players[1].dead == true) {
+    
+    if (players.length < MAX_PLAYERS) { store.inloop = false; return ; }
+    if (players[0].dead == true || players[1].dead == true) {
         store.inloop = true;
         return ;
     }
-    if (players.length < MAX_PLAYERS) { store.inloop = false; return ; }
     if (store.game.started === false) {
         store.game.started = true;
         startGame();
