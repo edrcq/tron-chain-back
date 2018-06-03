@@ -45,6 +45,7 @@ function startGame() {
 
 function sendToPlayers(event, data) {
     store.game.players.forEach( (p, i) => {
+        console.log('ID START', p.socket.id);
         p.socket.emit(event, data);
     })
 }
@@ -97,8 +98,6 @@ function gameLoop() {
     /*    p3: { x: players[2].pos.x, y: players[2].pos.y, direction: players[2].direction },
         p4: { x: players[3].pos.x, y: players[3].pos.y, direction: players[3].direction }, */
     };
-
-    console.log(players);
 
     sendToPlayers('updateGame', dataToSend);
     store.inloop = false;
