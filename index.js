@@ -225,7 +225,7 @@ io.on('connection', (client) => {
 });
 
 initGame();
-setInterval(gameLoop, 1000);
+setInterval(gameLoop, 200);
 
 io.listen(conf.port);
 console.log('Listening WebSocket on', conf.port);
