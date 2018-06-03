@@ -24,6 +24,7 @@ var conf = {
 };
 
 const MAX_PLAYERS = 2;
+const LOOP_TIME = 150;
 
 function initGame() {
     store.game = Object.assign({}, Game);
@@ -131,11 +132,11 @@ io.on('connection', (client) => {
         client.playerData.socket = client;
     
         if (store.game.players.length == 0) {
-            client.playerData.pos = { x: -15, y: 15 };
+            client.playerData.pos = { x: -15, y: -15 };
             client.playerData.direction = 'right';
         }
         else if (store.game.players.length == 1) {
-            client.playerData.pos = { x: -15, y: -15 };
+            client.playerData.pos = { x: -15, y: 15 };
             client.playerData.direction = 'right';
         }
         /*else if (store.game.players.length == 2) {
@@ -225,7 +226,7 @@ io.on('connection', (client) => {
 });
 
 initGame();
-setInterval(gameLoop, 1000);
+setInterval(gameLoop, LOOP_TIME);
 
 io.listen(conf.port);
 console.log('Listening WebSocket on', conf.port);
