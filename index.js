@@ -135,8 +135,8 @@ io.on('connection', (client) => {
             client.playerData.direction = 'right';
         }
         else if (store.game.players.length == 1) {
-            client.playerData.pos = { x: 15, y: -15 };
-            client.playerData.direction = 'down';
+            client.playerData.pos = { x: -15, y: -15 };
+            client.playerData.direction = 'right';
         }
         /*else if (store.game.players.length == 2) {
             client.playerData.pos = { x: -25, y: -25 };
